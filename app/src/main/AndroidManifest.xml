@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.sun2meg.earn">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LogActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".Del"
+            android:exported="true" />
+        <activity
+            android:name=".Welcome"
+            android:exported="true" />
+        <activity
+            android:name=".GoogleSign"
+            android:exported="true" />
+        <activity
+            android:name=".GoogleSignin"
+            android:exported="true" />
+
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="2XATfxbQpDTNhHa3fe3ecXZm0de0EaAosCUvWLO0KTxuNUZWggnparqTHurZaHbSkqyChXcnkKzMPd6XzJ2MMs" />
+
+        <activity
+            android:name=".BannerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ExampleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".BasicActivity"
+            android:exported="true" />
+        <activity
+            android:name=".EmailPasswordActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LinkAccount"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".ChoiceSelection"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NoInternetActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChoiceSelection"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/myAdmobapp_id" />
+        <meta-data
+            android:name="com.startapp.sdk.APPLICATION_ID"
+            android:value="@string/startapp_id" />
+
+        <activity
+            android:name=".DailyCheckins"
+            android:parentActivityName=".ChoiceSelection"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.sun2meg.earn.ChoiceSelection" />
+            <meta-data
+                android:name="applovin.sdk.key"
+                android:value="2XATfxbQpDTNhHa3fe3ecXZm0de0EaAosCUvWLO0KTxuNUZWggnparqTHurZaHbSkqyChXcnkKzMPd6XzJ2MMs" />
+        </activity>
+        <activity
+            android:name=".LuckyWheel"
+            android:parentActivityName=".ChoiceSelection"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.sun2meg.earn.ChoiceSelection" />
+        </activity>
+        <activity
+            android:name=".Instructions"
+            android:parentActivityName=".ChoiceSelection"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.sun2meg.earn.ChoiceSelection" />
+        </activity>
+        <activity
+            android:name=".Redeem"
+            android:parentActivityName=".ChoiceSelection"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.sun2meg.earn.ChoiceSelection" />
+        </activity>
+        <activity
+            android:name=".RedeemPayTm"
+            android:parentActivityName=".Redeem"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

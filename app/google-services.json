@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "752345349547",
+    "firebase_url": "https://watchearn-sun2meg-default-rtdb.firebaseio.com",
+    "project_id": "watchearn-sun2meg",
+    "storage_bucket": "watchearn-sun2meg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752345349547:android:97ec9f51ecc532270ea6ee",
+        "android_client_info": {
+          "package_name": "com.android.sun2meg.earn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752345349547-148tuc05nfe3m9i2e578lgstn8o4pgdc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.sun2meg.earn",
+            "certificate_hash": "cdcb64adeb962a73f2d433327f145d9868bdd9cc"
+          }
+        },
+        {
+          "client_id": "752345349547-3lgva9m044uq40q0nreu85piids2aqn1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOdFq9SpfwxFGEw5gDFGYUAhSjCjVFptI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752345349547-3lgva9m044uq40q0nreu85piids2aqn1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

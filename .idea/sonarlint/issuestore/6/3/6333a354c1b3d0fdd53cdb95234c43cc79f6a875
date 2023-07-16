@@ -1,0 +1,31 @@
+
+>
+java:S16047"(Make this anonymous inner class a lambda(°¯èù
+C
+java:S1604U"(Make this anonymous inner class a lambda(¹´Õˆşÿÿÿÿ
+D
+java:S1604¤"(Make this anonymous inner class a lambda(Êœüûÿÿÿÿ
+q
+java:S1450"[Remove the "firebaseAuth" field and declare it as a local variable in the relevant methods.(“ø
+m
+java:S3776&"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(¨Œşÿÿÿÿ
+S
+java:S1854*"8Remove this useless assignment to local variable "user".(è÷ÿƒıÿÿÿÿ
+D
+java:S1481*")Remove this unused "user" local variable.(è÷ÿƒıÿÿÿÿ
+M
+java:S1874-"7Remove this use of "toggleSoftInput"; it is deprecated.(¢Ï«Å
+[
+java:S18743"@Remove this use of "SOFT_INPUT_ADJUST_RESIZE"; it is deprecated.(«–¼úÿÿÿÿ
+E
+java:S1874@"/Remove this use of "Handler"; it is deprecated.(öıÍ
+J
+java:S1874}"/Remove this use of "Handler"; it is deprecated.(§çµüÿÿÿÿ
+W	java:S125‚"<This block of commented-out lines of code should be removed.(½¨ã×ıÿÿÿÿ
+
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(šÄ»Œúÿÿÿÿ
+D	java:S108”")Either remove or fill this block of code.(àï€†şÿÿÿÿ
+W	java:S125›"<This block of commented-out lines of code should be removed.(½¨ã×ıÿÿÿÿ
+W	java:S125¨"<This block of commented-out lines of code should be removed.(Šäâôÿÿÿÿÿ
+B
+java:S1172´"+Remove this unused method parameter "view".(ƒÉ¤
