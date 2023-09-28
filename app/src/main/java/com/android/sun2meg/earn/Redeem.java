@@ -127,8 +127,8 @@ public class Redeem extends AppCompatActivity {
         FirebaseDatabase database =  FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user1 =  mAuth.getCurrentUser();
-//        String userId = user1.getUid();
-        String userId = user1.getEmail();
+        String userId = user1.getUid();
+//        String userId = user1.getEmail();
         mRef =  database.getReference().child("Users").child(userId);
         mRef.child("RedeemCoins").removeValue();
         mRef.child("RedeemUSD").removeValue();
@@ -152,8 +152,8 @@ public class Redeem extends AppCompatActivity {
                     FirebaseDatabase database =  FirebaseDatabase.getInstance();
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseUser user1 =  mAuth.getCurrentUser();
-//                    String userId = user1.getUid();
-                    String userId = user1.getEmail();
+                    String userId = user1.getUid();
+//                    String userId = user1.getEmail();
                     mRef =  database.getReference().child("Users").child(userId);
                                     }
                 handler.postDelayed(this, delay);

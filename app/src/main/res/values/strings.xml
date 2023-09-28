@@ -1,4 +1,6 @@
 <resources>
+
+    <string name="Mon_app_name">Earn Digital</string>
     <string name="app_name">Watch and Earn</string>
     <string name="nointernet">Please check your internet connection and try again</string>
     <string name="title">Watch\n&amp; Earn</string>
@@ -8,9 +10,13 @@
     <string name="myAdmobInter_unitid">ca-app-pub-4156752697881993/6186955975</string>
     <string name="myAdmobInterReward_unitid">ca-app-pub-4156752697881993/6123818708</string>
     <string name="myAdmobReward_unitid">ca-app-pub-4156752697881993/4626888296</string>
+
+    <string name="monAppID">ca-app-pub-6799639509419386~6349245996</string>
+    <string name="monInter_unitid">ca-app-pub-6799639509419386~6349245996</string>
+    <string name="monInterReward_unitid">ca-app-pub-6799639509419386~6349245996</string>
+    <string name="monBannerid"> ca-app-pub-6799639509419386~6349245996</string>
+
     <string name="loading">loading</string>
     <string name="logout">log out</string>
     <!--    <string name="default_web_client_id">752345349547-3lgva9m044uq40q0nreu85piids2aqn1.apps.googleusercontent.com</string>-->
-
-
 </resources>

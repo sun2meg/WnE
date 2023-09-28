@@ -1,5 +1,7 @@
 package com.android.sun2meg.earn;
 
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -41,16 +42,11 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.startapp.sdk.adsbase.Ad;
 import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.VideoListener;
-import com.startapp.sdk.adsbase.adlisteners.AdDisplayListener;
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
 
 import java.util.concurrent.Executors;
@@ -70,10 +66,10 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
     private RewardedVideoAd mRewardedVideoAd;
     private InterstitialAd mInterstitialAd;
 
-    private MaxInterstitialAd interstitialAd;
+    private MaxInterstitialAd interstitialMaxAd;
     private int retryAttempt;
     StartAppAd start;
-    private MaxRewardedAd rewardedAd;
+    private MaxRewardedAd rewardedMaxAd;
     ScheduledExecutorService scheduler;
     private Handler handlerRetryAd;
     String dbCoin;
@@ -125,14 +121,15 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         start = new StartAppAd(ChoiceSelection.this);
         mAuth = FirebaseAuth.getInstance();
 
-//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // google
-        MobileAds.initialize(this, "ca-app-pub-4156752697881993~3026085465");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // google
+
+//        MobileAds.initialize(this, "ca-app-pub-4156752697881993~3026085465");  //my id
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
         loadRewardedVideoAd();
         mInterstitialAd = new InterstitialAd(this);
-//        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");  // google
-        mInterstitialAd.setAdUnitId("ca-app-pub-4156752697881993/6186955975");
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");  // google
+//        mInterstitialAd.setAdUnitId("ca-app-pub-4156752697881993/6186955975");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         ///////////////////////////////////////////////////////////////////////
@@ -198,14 +195,18 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                     Toast.makeText(ChoiceSelection.this, "Admob", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ChoiceSelection.this, "The Ads wasn't loaded yet. Switching Ad channel", Toast.LENGTH_SHORT).show();
+                }
+                else {
+//                    Toast.makeText(ChoiceSelection.this, "The Ads wasn't loaded yet. Switching Ad channel", Toast.LENGTH_SHORT).show();
                     Log.d("TAG", "The interstitial wasn't loaded yet.");
 //                    createInterstitialAd();
 //                    interstitialAd.loadAd();
-                    if(!interstitialAd.isReady()){
-                        interstitialAd.loadAd();}
-                    showInterstitialAd();
+
+
+                    /////////////
+//                    if(!interstitialMaxAd.isReady()){
+//                        interstitialMaxAd.loadAd();}
+//                    showInterstitialAd();
 //                    interstitialAd.loadAd();
                 }
 
@@ -216,11 +217,11 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
 
         });
 
-        
-        
-        
-        
-        
+
+
+
+
+
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdOpened() {
@@ -252,19 +253,19 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
 
     void createInterstitialAd()
     {
-        interstitialAd = new MaxInterstitialAd("0860082806f7006e", this );
-        interstitialAd.setListener( applovindListener );
+        interstitialMaxAd = new MaxInterstitialAd("0860082806f7006e", this );
+        interstitialMaxAd.setListener( applovindListener );
 
         // Load the first ad
-        interstitialAd.loadAd();
+        interstitialMaxAd.loadAd();
     }
 
 
 
     void createRewardedAd()
     {
-        rewardedAd = MaxRewardedAd.getInstance( "a1e99c49e704d3cb", this );
-        rewardedAd.setListener( applovindReListener );
+        rewardedMaxAd = MaxRewardedAd.getInstance( "a1e99c49e704d3cb", this );
+        rewardedMaxAd.setListener( applovindReListener );
 
 //        rewardedAd.loadAd();
     }
@@ -276,7 +277,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
                 Log.i("hello", "world");
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        interstitialAd.loadAd();
+                        interstitialMaxAd.loadAd();
 
                         createInterstitialAd();
 
@@ -302,11 +303,11 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         if(mRewardedVideoAd.isLoaded()){
             mRewardedVideoAd.show();
         }  else {
-            Toast.makeText(ChoiceSelection.this, "The Video wasn't loaded yet.Switching Ad Channel", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ChoiceSelection.this, "The Video wasn't loaded yet.Switching Ad Channel", Toast.LENGTH_SHORT).show();
             Log.d("TAG", "The mRewardedVideoAd wasn't loaded yet.");
-            createRewardedAd();
-            rewardedAd.loadAd();
-            showRewardAd();
+//            createRewardedAd();
+//            rewardedMaxAd.loadAd();
+//            showRewardAd();
         }
 //////////////////////////////////////////////////////////////////////////////////////////////
 //        showRewardedVideo(view);
@@ -398,18 +399,19 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         coinsEdit.putString("Coins", String.valueOf(coinCount));
         coinsEdit.apply();
         coins2.setText(String.valueOf(coinCount));
+        Toast.makeText(ChoiceSelection.this, "admob on reward 50 coins received", Toast.LENGTH_SHORT).show();
     }
     private void loadRewardedVideoAd() {
         if (!mRewardedVideoAd.isLoaded()){
-//            mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build()); //google
-            mRewardedVideoAd.loadAd("ca-app-pub-4156752697881993/4626888296", new AdRequest.Builder().build());
+            mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build()); //google
+//            mRewardedVideoAd.loadAd("ca-app-pub-4156752697881993/4626888296", new AdRequest.Builder().build());
         }
     }
 
 
     private void loadApplvnRewardedVideoAd() {
-        if (!rewardedAd.isReady()){
-            rewardedAd.loadAd();
+        if (!rewardedMaxAd.isReady()){
+            rewardedMaxAd.loadAd();
 //            createApplovinRewardAd();
         }
 
@@ -432,7 +434,16 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
     public void onRewardedVideoStarted() {}
     @Override
     public void onRewardedVideoCompleted() {
-        loadRewardedVideoAd();
+
+        int coinCount = Integer.parseInt(coins.getString("Coins", "0"));
+        coinCount = coinCount + 50;
+        SharedPreferences.Editor coinsEdit = coins.edit();
+        coinsEdit.putString("Coins", String.valueOf(coinCount));
+        coinsEdit.apply();
+        coins2.setText(String.valueOf(coinCount));
+
+        Toast.makeText(ChoiceSelection.this, "admob on Comp50 coins received", Toast.LENGTH_SHORT).show();
+         loadRewardedVideoAd();
     }
     @Override
     public void onResume() {
@@ -478,7 +489,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
                 @Override
                 public void run()
                 {
-                    rewardedAd.loadAd();
+                    rewardedMaxAd.loadAd();
                 }
             }, delayMillis );
         }
@@ -487,12 +498,12 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         public void onAdDisplayFailed(final MaxAd maxAd, final MaxError error)
         {
             // Rewarded ad failed to display. We recommend loading the next ad
-            rewardedAd.loadAd();
+            rewardedMaxAd.loadAd();
         }
 
         @Override
         public void onAdDisplayed(final MaxAd maxAd) {
-            rewardedAd.loadAd();
+            rewardedMaxAd.loadAd();
         }
 
         @Override
@@ -502,7 +513,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         public void onAdHidden(final MaxAd maxAd)
         {
             // rewarded ad is hidden. Pre-load the next ad
-            rewardedAd.loadAd();
+            rewardedMaxAd.loadAd();
         }
 
         @Override
@@ -521,8 +532,8 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
             coins2.setText(String.valueOf(coinCount));
 
             Toast.makeText(ChoiceSelection.this, "50 coins received", Toast.LENGTH_SHORT).show();
-            rewardedAd.loadAd();
-            rewardedAd.destroy();
+            rewardedMaxAd.loadAd();
+            rewardedMaxAd.destroy();
 
         }
 
@@ -532,8 +543,8 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         {
             // Rewarded ad was displayed and user should receive the reward
         }
-        
-        
+
+
     };
 
     MaxAdListener applovindListener= new MaxAdListener() {
@@ -562,7 +573,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
                 @Override
                 public void run()
                 {
-                    interstitialAd.loadAd();
+                    interstitialMaxAd.loadAd();
                 }
             }, delayMillis );
         }
@@ -572,7 +583,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         {
             Toast.makeText(ChoiceSelection.this, "The Ads display failed.", Toast.LENGTH_SHORT).show();
             // Interstitial ad failed to display. AppLovin recommends that you load the next ad.
-            interstitialAd.loadAd();
+            interstitialMaxAd.loadAd();
         }
 
 
@@ -581,7 +592,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
         public void onAdHidden(final MaxAd maxAd)
         {
             // Interstitial ad is hidden. Pre-load the next ad
-            interstitialAd.loadAd();
+            interstitialMaxAd.loadAd();
 
         }
 
@@ -602,7 +613,7 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
 //            setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            startActivity(setIntent);
 
-            interstitialAd.destroy();
+            interstitialMaxAd.destroy();
             destroy();
 
         }
@@ -616,19 +627,19 @@ public class ChoiceSelection extends AppCompatActivity implements RewardedVideoA
 
         public void destroy() {
             handlerRetryAd.removeCallbacksAndMessages(null);
-            interstitialAd.destroy();
+            interstitialMaxAd.destroy();
 
         }
     public void showInterstitialAd() {
-        if (interstitialAd.isReady()) {
-            interstitialAd.showAd();
+        if (interstitialMaxAd.isReady()) {
+            interstitialMaxAd.showAd();
         } else
             Toast.makeText(ChoiceSelection.this, "Ad not ready", Toast.LENGTH_SHORT).show();
     }
 
     public void showRewardAd() {
-        if (rewardedAd.isReady()) {
-            rewardedAd.showAd();
+        if (rewardedMaxAd.isReady()) {
+            rewardedMaxAd.showAd();
         } else
             Toast.makeText(ChoiceSelection.this, "Ad not ready", Toast.LENGTH_SHORT).show();
     }

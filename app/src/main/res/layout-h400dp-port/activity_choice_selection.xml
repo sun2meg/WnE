@@ -56,10 +56,10 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/font"
                     android:text="MY BALANCE :"
-                    android:textStyle="bold"
-
                     android:textColor="@android:color/white"
+
                     android:textSize="11sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/textViewCoins"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

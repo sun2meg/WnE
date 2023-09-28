@@ -166,6 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                         FirebaseAuth.getInstance().signOut();
 
+                        startActivity( new Intent(getApplicationContext(), EmailPasswordActivity.class));
                     }
                 }, 130);
             }

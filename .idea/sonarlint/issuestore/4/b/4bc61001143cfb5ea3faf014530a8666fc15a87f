@@ -1,0 +1,12 @@
+
+>
+java:S1604<"(Make this anonymous inner class a lambda(ù¦¤“
+—
+java:S1186N"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(„´ïÕ
+œ
+java:S1186Q"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ğù¾şÿÿÿÿ
+E
+java:S1874<"/Remove this use of "Handler"; it is deprecated.(ù¦¤“
+C
+java:S1185["(Remove this method to simply inherit it.(œƒƒ©ùÿÿÿÿ
+V	java:S125]"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ

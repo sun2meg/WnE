@@ -111,8 +111,8 @@ public class RedeemPayTm extends AppCompatActivity {
         FirebaseDatabase database =  FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user1 =  mAuth.getCurrentUser();
-//        String userId = user1.getUid();
-        String userId = user1.getEmail();
+        String userId = user1.getUid();
+//        String userId = user1.getEmail();
         mRef =  database.getReference().child("Users").child(userId);
         mRef.child("RedeemUSD").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -161,8 +161,8 @@ public class RedeemPayTm extends AppCompatActivity {
                     FirebaseDatabase database =  FirebaseDatabase.getInstance();
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseUser user1 =  mAuth.getCurrentUser();
-                    String userId = user1.getEmail();
-//                    String userId = user1.getUid();
+//                    String userId = user1.getEmail();
+                    String userId = user1.getUid();
                     mRefStatus =  database.getReference().child("Redeem").push();
                     mRefStatus.child("Status").setValue("Review");
                     mRefStatus.child("Email").setValue(email);

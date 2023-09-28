@@ -1,0 +1,16 @@
+
+c
+java:S1192S"FDefine a constant instead of duplicating this literal "Coins" 3 times.(Ú‹ºö8ç© ­¬1
+J
+java:S16041"(Make this anonymous inner class a lambda(‚’…´øÿÿÿÿ8é© ­¬1
+J
+java:S1604H"(Make this anonymous inner class a lambda(¥íîŸÿÿÿÿÿ8ê© ­¬1
+S
+java:S1153Y"1Directly append the argument of String.valueOf().(ò‹›Ëøÿÿÿÿ8í© ­¬1
+N
+java:S1153f"1Directly append the argument of String.valueOf().(ïœ£å8î© ­¬1
+Y
+java:S2589Q"7Remove this expression which always evaluates to "true"(¤¦ß‘üÿÿÿÿ8Èª ­¬1
+x
+java:S1450 "[Remove the "mLoginButton" field and declare it as a local variable in the relevant methods.(ÉÕ8Òª ­¬1
+]	java:S125X"<This block of commented-out lines of code should be removed.(»„ûÙøÿÿÿÿ8éª ­¬1

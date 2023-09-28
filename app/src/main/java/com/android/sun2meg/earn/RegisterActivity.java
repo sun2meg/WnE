@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.android.gms.tasks.Task;
 
-
 public class RegisterActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private Button btnRegister;
@@ -89,4 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

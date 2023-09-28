@@ -1,5 +1,6 @@
 package com.android.sun2meg.earn;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,38 +21,29 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.applovin.adview.AppLovinInterstitialAd;
-import com.applovin.adview.AppLovinInterstitialAdDialog;
 import com.applovin.mediation.MaxAd;
 import com.applovin.mediation.MaxAdListener;
 import com.applovin.mediation.MaxError;
 import com.applovin.mediation.ads.MaxInterstitialAd;
-import com.applovin.sdk.AppLovinAd;
-import com.applovin.sdk.AppLovinAdClickListener;
-import com.applovin.sdk.AppLovinAdDisplayListener;
-import com.applovin.sdk.AppLovinAdLoadListener;
-import com.applovin.sdk.AppLovinAdVideoPlaybackListener;
 import com.applovin.sdk.AppLovinSdk;
 import com.applovin.sdk.AppLovinSdkConfiguration;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.startapp.sdk.adsbase.StartAppAd;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import rubikstudio.library.LuckyWheelView;
 import rubikstudio.library.model.LuckyItem;
 
 public class LuckyWheel extends AppCompatActivity {
-
+    private AdView adView;
     private Calendar calendar;
     private int weekday;
     private String todayString;
@@ -59,16 +51,18 @@ public class LuckyWheel extends AppCompatActivity {
     private int coin;
     private InterstitialAd mInterstitialAd;
 
-    private MaxInterstitialAd interstitialAd;
+    private MaxInterstitialAd interstitialMaxAd;
     private int retryAttempt;
-
+    AdRequest adRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setContentView(R.layout.activity_lucky_wheel);
 
         final Handler handler = new Handler();
+        adRequest = new AdRequest.Builder().build();
+        adView = findViewById(R.id.adView);
          Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -94,10 +88,7 @@ public class LuckyWheel extends AppCompatActivity {
         if (imm.isAcceptingText()) {
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
-        setContentView(R.layout.activity_lucky_wheel);
-
-
-
+        adView.loadAd(adRequest);
 
         AppLovinSdk.getInstance( this ).setMediationProvider( "max" );
         AppLovinSdk.initializeSdk( this, new AppLovinSdk.SdkInitializationListener() {
@@ -106,18 +97,17 @@ public class LuckyWheel extends AppCompatActivity {
             public void onSdkInitialized(final AppLovinSdkConfiguration configuration)
             {
                 // AppLovin SDK is initialized, start loading ads
-
                 createInterstitialAd();
-
             }
         } );
 
 
-        MobileAds.initialize(this, "ca-app-pub-4156752697881993~3026085465");
-//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // google id
+//        MobileAds.initialize(this, "ca-app-pub-4156752697881993~3026085465");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // google id
+        adView.loadAd(adRequest);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-4156752697881993/6186955975");
-//        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //google unit id
+//        mInterstitialAd.setAdUnitId("ca-app-pub-4156752697881993/6186955975");
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //google unit id
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -125,7 +115,17 @@ public class LuckyWheel extends AppCompatActivity {
             @Override
             public void onAdFailedToLoad(int errorCode) {}
             @Override
-            public void onAdOpened() {}
+            public void onAdOpened() {
+                final SharedPreferences coins = getSharedPreferences("Rewards", MODE_PRIVATE);
+
+                Toast.makeText(getApplicationContext(), String.valueOf("+ " + coin +" admob Coins"), Toast.LENGTH_SHORT).show();
+                int coinCount = Integer.parseInt(coins.getString("Coins", "0"));
+                coinCount = coinCount + (coin);
+                SharedPreferences.Editor coinsEdit = coins.edit();
+                coinsEdit.putString("Coins", String.valueOf(coinCount));
+                coinsEdit.apply();
+
+            }
             @Override
             public void onAdClicked() {}
             @Override
@@ -141,6 +141,7 @@ public class LuckyWheel extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         final SharedPreferences coins = getSharedPreferences("Rewards", MODE_PRIVATE);
         final LuckyWheelView luckyWheelView = (LuckyWheelView) findViewById(R.id.luckyWheel);
         findViewById(R.id.play).setEnabled(true);
@@ -209,6 +210,7 @@ public class LuckyWheel extends AppCompatActivity {
                     findViewById(R.id.play).setAlpha(.5f);
             }
         });
+
         luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
             @Override
             public void LuckyRoundItemSelected(int index) {
@@ -244,8 +246,10 @@ public class LuckyWheel extends AppCompatActivity {
                     mInterstitialAd.show();
                 } else {
                     Log.d("TAG", "The interstitial wasn't loaded yet. switching ad");
-                    interstitialAd.loadAd();
-                    showInterstitialAd();
+                    ///////////////////////////////////////
+
+//                    interstitialMaxAd.loadAd();
+//                    showInterstitialAd();
                 }
             }
         });
@@ -263,9 +267,8 @@ public class LuckyWheel extends AppCompatActivity {
 
     void createInterstitialAd()
     {
-        interstitialAd = new MaxInterstitialAd("0860082806f7006e", this );
-        interstitialAd.setListener( applovindListener );
-
+        interstitialMaxAd = new MaxInterstitialAd("0860082806f7006e", this );
+        interstitialMaxAd.setListener( applovindListener );
         // Load the first ad
 //        interstitialAd.loadAd();
     }
@@ -296,7 +299,7 @@ public class LuckyWheel extends AppCompatActivity {
                 @Override
                 public void run()
                 {
-                    interstitialAd.loadAd();
+                    interstitialMaxAd.loadAd();
                 }
             }, delayMillis );
         }
@@ -305,7 +308,7 @@ public class LuckyWheel extends AppCompatActivity {
         public void onAdDisplayFailed(final MaxAd maxAd, final MaxError error)
         {
             // Interstitial ad failed to display. AppLovin recommends that you load the next ad.
-            interstitialAd.loadAd();
+            interstitialMaxAd.loadAd();
         }
 
 
@@ -314,7 +317,7 @@ public class LuckyWheel extends AppCompatActivity {
         public void onAdHidden(final MaxAd maxAd)
         {
             // Interstitial ad is hidden. Pre-load the next ad
-            interstitialAd.loadAd();
+            interstitialMaxAd.loadAd();
         }
 
         @Override
@@ -340,9 +343,6 @@ public class LuckyWheel extends AppCompatActivity {
 
         @Override
         public void onAdClicked(final MaxAd maxAd) {}
-
-
-
     };
 
     @Override
@@ -351,10 +351,10 @@ public class LuckyWheel extends AppCompatActivity {
        startActivity(intent);
     }
     public void showInterstitialAd() {
-        if (interstitialAd.isReady()) {
-            interstitialAd.showAd();
-        } else
-            Toast.makeText(LuckyWheel.this, "Ad not ready", Toast.LENGTH_SHORT).show();
+        if (interstitialMaxAd.isReady()) {
+            interstitialMaxAd.showAd();
+        }
+
     }
 
 }

@@ -35,7 +35,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:src">@mipmap/authentication</item>
+        <item name="android:src">@mipmap/ic_launcher_foreground</item>
         <item name="android:adjustViewBounds">true</item>
     </style>
 

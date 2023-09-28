@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +38,7 @@ public class EmailPasswordActivity extends BasicActivity {
 
 //    private EditText mEdtEmail, mEdtPassword;
     private Button regBtn,login;
+    private TextView forgotPassword;
 //    private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
@@ -45,7 +48,7 @@ public class EmailPasswordActivity extends BasicActivity {
     private TextView mTextViewProfile;
 
     private TextInputLayout mLayoutEmail, mLayoutPassword;
-
+private EditText frgtPswd;
     private static final String TAG = "EmailPasswordActivity";
 
 
@@ -100,10 +103,16 @@ public class EmailPasswordActivity extends BasicActivity {
             }
         });
 
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+
+            }
+        });
+
     }
-
-
-
 
 
 
@@ -115,9 +124,6 @@ public class EmailPasswordActivity extends BasicActivity {
         if (user != null) {
             updateUI(user);
         }
-
-
-
     }
 
     @Override
@@ -185,8 +191,7 @@ public class EmailPasswordActivity extends BasicActivity {
         mTextViewProfile = findViewById(R.id.profile);
         mEdtEmail = findViewById(R.id.edt_email);
         mEdtPassword = findViewById(R.id.edt_password);
-
-
+        forgotPassword=findViewById(R.id.forget);
 
     }
 
@@ -208,34 +213,30 @@ public class EmailPasswordActivity extends BasicActivity {
 //                    FirebaseUser user = mAuth.getCurrentUser();
                     ////////////////////////////////////////////
                     FirebaseUser user = mAuth.getCurrentUser();
-                    // Increment user's coin value by 10 on successful login
-                    mDatabase.child("Users").child(user.getUid()).child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            usercoins = Integer.parseInt(dataSnapshot.getValue(String.class));
-                            usercoin = dataSnapshot.getValue(Integer.class);
-                         
-                            mDatabase.child("Users").child(user.getUid()).child("Coins").setValue(usercoin);
-                            // Display user's coin value with Toast message
-                            Toast.makeText(getApplicationContext(), "Your coins: " + usercoin, Toast.LENGTH_SHORT).show();
-                            // Save user's coin value to SharedPreferences
-
-                    coinsEdit = coins.edit();
-                    coinsEdit.putString("Coins", String.valueOf(usercoin));
-                    coinsEdit.apply();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                // Handle errors here
-                            }
-                        });
-
-
-
-
-
-                            updateUI(user);
+//                    // Increment user's coin value by 10 on successful login
+//                    mDatabase.child("Users").child(user.getUid()).child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                            usercoins = Integer.parseInt(dataSnapshot.getValue(String.class));
+//                            usercoin = dataSnapshot.getValue(Integer.class);
+//
+//                            mDatabase.child("Users").child(user.getUid()).child("Coins").setValue(usercoin);
+//                            // Display user's coin value with Toast message
+//                            Toast.makeText(getApplicationContext(), "Your coins: " + usercoin, Toast.LENGTH_SHORT).show();
+//                            // Save user's coin value to SharedPreferences
+//
+//                    coinsEdit = coins.edit();
+//                    coinsEdit.putString("Coins", String.valueOf(usercoin));
+//                    coinsEdit.apply();
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//                                Toast.makeText(getApplicationContext(), String.valueOf(databaseError), Toast.LENGTH_SHORT).show();
+//                                // Handle errors here
+//                            }
+//                        });
+                     updateUI(user);
                 }
                 hideProgressDialog();
             }
@@ -257,27 +258,47 @@ public class EmailPasswordActivity extends BasicActivity {
         }
     }
 
-
-    private void updateUI(FirebaseUser userf) {
-        DatabaseReference mDatabase = database.getReference();
-        if (userf != null) {
-/////////////////////////////////////////////////////////////////////////////////
-////            user = FirebaseAuth.getInstance().getCurrentUser();
-//            String userId = user.getUid();
-//            coins = getSharedPreferences("Rewards", MODE_PRIVATE);
+//    private void updateUI(FirebaseUser userf) {
+//        DatabaseReference mDatabase = database.getReference();
+//        if (userf != null) {
 //
-//            myRef =  database.getReference().child("Users").child(userId);
+//            FirebaseUser user = mAuth.getCurrentUser();
 //
-//            myRef.child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
+//            // Increment user's coin value by 10 on successful login
+//            mDatabase.child("Users").child(user.getUid()).child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    usercoin = Integer.parseInt(dataSnapshot.getValue(String.class));
-
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    // Retrieve the user's coins value from the database
+//                    if (dataSnapshot.exists()) {
+////                        usercoin = dataSnapshot.getValue(Integer.class);
+//                        usercoin = 1500;
+//                    } else {
+//                        // If the coins node does not exist in the database, create it with an initial value of 0
+//                        usercoin = 0;
+//                        mDatabase.child("Users").child(user.getUid()).child("Coins").setValue(usercoin);
+//                    }
+//
+//                    // Save user's coin value to SharedPreferences
 //                    coinsEdit = coins.edit();
-//                    coinsEdit.putString("Coins", String.valueOf(usercoin));
+//                    coinsEdit.putInt("Coins", usercoin);
 //                    coinsEdit.apply();
-//                 Toast.makeText(EmailPasswordActivity.this, usercoin +"found", Toast.LENGTH_SHORT).show();
-////
+//
+//                    // Display user's coin value with Toast message on the main UI thread
+//                    Handler handler = new Handler(Looper.getMainLooper());
+//                    handler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "Your coins: " + usercoin, Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//
+//                    // Proceed to the next activity (ChoiceSelection or ExampleActivity) on the main UI thread
+//                    handler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+////                            startNextActivity();
+//                        }
+//                    });
 //                }
 //
 //                @Override
@@ -285,20 +306,65 @@ public class EmailPasswordActivity extends BasicActivity {
 //                    // Handle errors here
 //                }
 //            });
+//            startNextActivity();
+//        }
+//    }
 //
-//
+//    private void startNextActivity() {
+//        Bundle bundle = new Bundle();
+//        Intent intent = new Intent(getApplicationContext(), ChoiceSelection.class);
+//        intent.putExtras(bundle);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//        finish();
+//    }
 
-            FirebaseUser user = mAuth.getCurrentUser();
-            // Increment user's coin value by 10 on successful login
-            mDatabase.child("Users").child(user.getUid()).child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+
+//String.valueOf(usercoin)
+    private void updateUI(FirebaseUser user) {
+        DatabaseReference mDatabase = database.getReference();
+        if (user != null) {
+
+
+//
+        FirebaseDatabase database =  FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user1 =  mAuth.getCurrentUser();
+            String userId = user.getUid();
+//        String userId = user1.getUid();
+//        String userId = user1.getEmail();
+        myRef =  database.getReference().child("Users").child(userId);
+          myRef.child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
+
+//            FirebaseUser user = mAuth.getCurrentUser();
+//            mDatabase =  database.getReference().child("Users").child(user.getUid());
+//            // Increment user's coin value by 10 on successful login
+//            mDatabase.child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
+//            mDatabase.child("Users").child(user.getUid()).child("Coins").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            usercoins = Integer.parseInt(dataSnapshot.getValue(String.class));
-                    usercoin = dataSnapshot.getValue(Integer.class);
+                    if (dataSnapshot.exists()) {
+                        usercoin = Integer.parseInt(dataSnapshot.getValue(String.class));
+//                        usercoin = dataSnapshot.getValue(Integer.class);
+//                        Toast.makeText(getApplicationContext(), "Exists" + String.valueOf(usercoin), Toast.LENGTH_SHORT).show();
 
-                    mDatabase.child("Users").child(user.getUid()).child("Coins").setValue(usercoin);
-                    // Display user's coin value with Toast message
-                    Toast.makeText(getApplicationContext(), "Your coins: " + usercoin, Toast.LENGTH_SHORT).show();
+                    } else {
+//                        Toast.makeText(getApplicationContext(), "Doesnt Exist: " + usercoin, Toast.LENGTH_SHORT).show();
+
+                        // If the coins node does not exist in the database, create it with an initial value of 0
+                        usercoin = 0;
+//                        mDatabase.child("Users").child(user.getUid()).child("Coins").setValue(usercoin);
+                    }
+////                            usercoins = Integer.parseInt(dataSnapshot.getValue(String.class));
+//                    usercoin = dataSnapshot.getValue(Integer.class);
+//                    mDatabase.child("Users").child(user.getUid()).child("Coins").setValue(usercoin);
+//                    // Display user's coin value with Toast message
+
+
+//                    Toast.makeText(getApplicationContext(), "Your coins: " + usercoin, Toast.LENGTH_SHORT).show();
+
                     // Save user's coin value to SharedPreferences
 
                     coinsEdit = coins.edit();
@@ -308,7 +374,8 @@ public class EmailPasswordActivity extends BasicActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    // Handle errors here
+                    // Handle errors hereString.valueOf(usercoin)
+                    Toast.makeText(getApplicationContext(), String.valueOf(databaseError), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -323,8 +390,6 @@ public class EmailPasswordActivity extends BasicActivity {
             finish();
         }
     }
-
-
 
 
 

@@ -1,4 +1,5 @@
 package com.android.sun2meg.earn;
+
 // User.java
 public class User {
     private int coins;
